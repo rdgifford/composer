@@ -1,0 +1,19 @@
+<section class="bookmarklist-container bookmarklist-container--blue-dark">
+  <ul class="bookmarklist__sublist">
+    <!-- Angular's built-in structural directive "*ngFor" 
+    instantiates a list element for each bookmark. 
+    The hash prefix means, that the private variables 
+    "bookmark" and "i" are created. 
+    They can be used on the list element's child elements.-->
+    <li *ngFor="#bookmark of bookmarks; #i = index">
+      <!-- The template property binding "[bookmark]" 
+      sets the value to the component property "bookmark". 
+      In addition there are two custom component event bindings 
+      "(bookmarkChanged)" and "(bookmarkDeleted)". 
+      Whenever one of these events were raised, 
+      their respective functions will be executed. -->
+      <sp-bookmark [bookmark]="bookmark" (bookmarkChanged)="setBookmarks()" 
+        (bookmarkDeleted)="deleteBookmark(bookmark, i)"></sp-bookmark>
+    </li>
+  </ul>
+</section>
