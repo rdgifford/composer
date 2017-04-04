@@ -1,3 +1,4 @@
+
 @font-face {
   font-family: 'Questrial';
   font-style: normal;
@@ -1039,3 +1040,8 @@ sp-bookmark {
       border-color: #6f7c7c; }
   .bookmarklist-container--black-light .bookmark__form__label {
     color: #899696; }
+
+    body {
+      width: 500px;
+      height: 500px
+    }

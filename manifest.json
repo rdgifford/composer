@@ -1,29 +1,47 @@
 {
-    "manifest_version": 2,
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-    "name": "Composer",
-    "short_name": "Write templated emails easier",
-    "description": "This application drafts templated emails for you.",
-    "version": "1.0.0",
-    "author": "Guy Thomas",
-    "icons": {
-        "16": "./icons/icon16.png",
-        "19": "./icons/icon19.png",
-        "48": "./icons/icon48.png",
-        "128": "./icons/icon128.png"
-    },
-    "browser_action": {
-        "default_icon": {
-            "48": "./icons/icon48.png"
-        },
-        "default_title": "Click to modify your default body and names"
-    },
-    "chrome_url_overrides" : {
-    	"newtab": "index.html"
+	"manifest_version": 2,
+	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+	"name": "Composer",
+	"short_name": "Write templated emails easier",
+	"description": "This application drafts templated emails for you.",
+	"version": "0.0.1",
+	"author": "Guy Thomas",
+	"icons": {
+		"16": "./icons/icon16.png",
+		"19": "./icons/icon19.png",
+		"48": "./icons/icon48.png",
+		"128": "./icons/icon128.png"
+	},
+	"browser_action": {
+		"default_icon": {
+			"48": "./icons/icon48.png"
+		},
+		"default_title": "Click to modify your default body and names"
+	},
+	"browser_action": {
+	  "default_icon": {"48": "./icons/icon48.png"},
+	  "default_title": "Change Template",
+	  "default_popup": "index.html"
 	},
 	"background": {
-	    "page": "index.html",
-	    "persistent": false
+		"scripts": [
+			"lib/jquery.js", "js/background.js"
+		],
+		"persistent": true
 	},
-	"permissions": ["activeTab"]
+	"permissions": [
+		"https://*/*",
+		"http://*/*",
+		"tabs"
+	],
+	"content_scripts": [{
+		"run_at": "document_end",
+		"matches": [
+			"https://*/*",
+			"http://*/*"
+		],
+		"js": [
+			"lib/jquery.js", "js/emailInject.js"
+		]
+	}]
 }
