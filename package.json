@@ -3,7 +3,6 @@
   "description": "Compose templated emails with ease",
   "version": "0.0.1",
   "scripts": {
-    "copy-lib": "mkdir lib && cp node_modules/jquery/dist/jquery.js lib/",
   },
   "dependencies": {
     "jquery": "^3.2.1"

@@ -5,5 +5,5 @@ chrome.runtime.onMessage.addListener(
 });
 
 chrome.browserAction.onClicked.addListener(function(tab) {
-   chrome.tabs.executeScript(null, {file: "emailWrapper.js"});
+   chrome.tabs.executeScript(null, {file: "emailInject.js"});
 });
