@@ -19,7 +19,7 @@
 	},
 	"background": {
 		"scripts": [
-			"lib/jquery.js", "js/background.js"
+			"node_modules/jquery/dist/jquery.min.js", "js/background.js"
 		],
 		"persistent": true
 	},
@@ -35,7 +35,7 @@
 			"http://*/*"
 		],
 		"js": [
-			"lib/jquery.js", "js/emailInject.js"
+			"node_modules/jquery/dist/jquery.min.js", "js/emailInject.js"
 		]
 	}]
 }

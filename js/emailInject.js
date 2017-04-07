@@ -31,7 +31,7 @@ const createEmail = {
 }
 
 function emailWrapper() {
-	console.log('Email wrapper run')
+	connsole.log('Email wrapper run')
 	//Find divs with an email in them
 	const validEmail = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,'gi');
 	const $emails = $("div").filter(function () {
@@ -59,8 +59,6 @@ function emailWrapper() {
 	})
 	$emails.css( "text-decoration", "underline" );
 }
-
-emailWrapper()
 
 chrome.runtime.sendMessage({}, function(response) {
 	var readyStateCheckInterval = setInterval(function() {
