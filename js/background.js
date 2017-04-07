@@ -1,6 +1,9 @@
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-  	console.log('This is in the message listener')
   	chrome.pageAction.show(sender.tab.id);
     sendResponse();
+});
+
+chrome.browserAction.onClicked.addListener(function(tab) {
+   chrome.tabs.executeScript(null, {file: "emailWrapper.js"});
 });

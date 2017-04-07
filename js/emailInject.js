@@ -1,4 +1,4 @@
-const $ = jQuery;
+// const $ = jQuery;
 const createEmail = {
 	body: function (name, role, company) {
 		const createIntro = function (name) {
@@ -11,10 +11,8 @@ const createEmail = {
 
 		const body = `${createIntro(name)}
 
-		My name is Guy and I submitted my resume for a ${role} at ${company}. I’m not sure who the hiring manager is for this position but I'm extremely interested in the opportunity, and I just wanted to touch base to see if there’s anything that I could provide to help show my fit for the role and perhaps even get in touch with the hiring manager of the position.
-
-		Thank you for your time and kind consideration.
-
+		My name is Guy, I'm a big fan of ${company} and also a Full Stack Dev. I hope you don't mind me reaching out like this, but do you know of any current openings at ${company} for a Full Stack Dev? I did look at the careers page but I thought I'd reach out directly.		
+		
 		Regards,
 
 		Guy`
@@ -27,12 +25,13 @@ const createEmail = {
 		const link = `https://mail.google.com/mail/?view=cm&fs=1&to=${encAdd}&su=${encSubject}&body=${encBody}`
 		return link;
 	},
-	subject: function() {
-		return 'Full Stack Developer Application'
+	subject: function(company) {
+		return `Full Stack Developer Positions at ${company}`
 	}
 }
 
 function emailWrapper() {
+	console.log('Email wrapper run')
 	//Find divs with an email in them
 	const validEmail = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,'gi');
 	const $emails = $("div").filter(function () {
@@ -55,11 +54,13 @@ function emailWrapper() {
 		//Convert to data for the required format in the email link
 		const firstName = firstLastName[0];
 		const body = createEmail.body(firstName, 'Full Stack Developer', company);
-		const link = createEmail.link(email, 'Full Stack Devleoper Application', body)
+		const link = createEmail.link(email, createEmail.subject(company), body)
 		$(item).wrap( `<a href=${link} target=_blank></a>` );
 	})
 	$emails.css( "text-decoration", "underline" );
 }
+
+emailWrapper()
 
 chrome.runtime.sendMessage({}, function(response) {
 	var readyStateCheckInterval = setInterval(function() {
