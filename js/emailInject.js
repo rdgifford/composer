@@ -30,8 +30,45 @@ const createEmail = {
 	}
 }
 
+function exhaustInfiniteScroll(callback) {
+    var i = 0;
+    var intervalsSinceLoading = 0;
+    var infiniteScrollLoading;
+    var scrollingDown = setInterval(() => {
+        console.log(i++);
+        infiniteScrollLoading = $('div div.company-info-div div div div.infinite-list-item.infinite-scroll-loading-container').length > 0;
+        if(!infiniteScrollLoading) {
+            intervalsSinceLoading++
+			console.log(intervalsSinceLoading);
+                document.body.scrollTop = 695;
+            if(intervalsSinceLoading > 5 || i > 100) {
+				clearInterval(scrollingDown);
+				console.log('Finished loading entries');
+                setTimeout(function() {
+                    callback();
+                }, 5000);
+            }
+        } else {
+            intervalsSinceLoading = 0;
+        }
+        document.body.scrollTop = document.body.scrollHeight;
+    }, 100)
+}
+
+function filterLeads(str, callback) {
+    console.log('filtering leads');
+    $('div div.company-info-div div div div.contact').each((i, lead) => {
+        let title = $(lead).find('.contact-title').text()
+
+        if(!title.includes(str)) {
+            lead.remove()
+        }
+    })
+    callback.call(this);
+}
+
 function emailWrapper() {
-	connsole.log('Email wrapper run')
+	console.log('Email wrapper run')
 	//Find divs with an email in them
 	const validEmail = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,'gi');
 	const $emails = $("div").filter(function () {
@@ -58,6 +95,11 @@ function emailWrapper() {
 		$(item).wrap( `<a href=${link} target=_blank></a>` );
 	})
 	$emails.css( "text-decoration", "underline" );
+}
+
+function emailInject() {
+    let filter = filterLeads.bind(this, 'Recruit', emailWrapper)
+    exhaustInfiniteScroll(filter);
 }
 
 chrome.runtime.sendMessage({}, function(response) {
